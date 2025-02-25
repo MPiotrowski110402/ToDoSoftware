@@ -1,0 +1,82 @@
+ <div class="row">
+            <!-- Lewa kolumna: Taski -->
+            <div class="col-md-8">
+                <section id="tasks" class="mb-4">
+                    <h2 class="text-secondary">Twoje Zadania</h2>
+                    <div id="task-list" class="list-group mb-3">
+                    {% for task in allTasks.tasks %}
+                        <div class="list-group-item d-flex justify-content-between align-items-center task pending">
+                            <div class="d-flex align-items-center">
+                                <input type="checkbox" class="me-2">
+                                <span>{{ task.title }}</span>
+                            </div>
+                            <div>
+                                <form method="POST" action="modules/function.php">
+                                <input type="hidden" name="taskId" value="{{ task.id }}">
+                                <button type="submit" name="button_agree" class="btn btn-success btn-sm">✓</button>
+                                <button type="submit" name="button_dismiss" class="btn btn-danger btn-sm">✕</button>
+                                </form>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p>Brak zadań do wyświetlenia.</p>
+                        {% endfor %} 
+                    </div>
+                        {% if session_category is defined and session_category is not null %}
+                    <form id="new-task-form" class="input-group mb-4" action="modules/category.php" method="POST">
+                        <input type="text" name="task" class="form-control" placeholder="Dodaj nowe zadanie" required>
+                        {% if categoryId %}
+                        <input type="hidden" name="categoryId" value="{{ categoryId }}">
+                        {% endif %}
+                        <button type="submit" name="dodajTask" class="btn btn-primary">Dodaj</button>
+                    </form>
+                    {% endif %}
+                    <!-- Ukończone zadania -->
+                    <h3 class="text-success">Ukończone zadania</h3>
+                    <div class="list-group mb-3">
+                    {% for completedTask in allTasks.completedTasks %}
+                        <div class="list-group-item list-group-item-success">{{ completedTask.title }}</div>
+                    {% endfor %}
+                    </div>
+                    
+                    <!-- Nieukończone zadania -->
+                    <h3 class="text-danger">Nieukończone zadania</h3>
+                    <div class="list-group">
+                    {% for notCompletedTask in allTasks.notCompletedTasks %}
+                        <div class="list-group-item list-group-item-danger">{{notCompletedTask.title}}</div>
+                    {% endfor %}
+                    </div>
+                </section>
+            </div>
+            <div class="col-md-4">
+                <section id="categories">
+                    <h2 class="text-secondary">Kategorie</h2>
+                    <ul class="list-group mb-3">
+{% for category in allTasks.displayCategories %}
+<form method="GET" action="modules/category.php">
+    <!-- Wartość categoryId dla danej kategorii -->
+    <input type="hidden" name="categoryId" value="{{ category.id }}">
+    <!-- Przycisk do usunięcia kategorii -->
+    <li class="list-group-item">
+        <button type="submit" name="button_dismiss" class="btn btn-danger btn-sm">✕</button> 
+        <a href="index.php?categoryId={{category.id}}">{{ category.name }}</a>
+    </li>
+</form>
+{% endfor %}
+
+
+                    </ul>
+                    <form id="new-category-form" class="input-group" action="modules/category.php" method="POST">
+                        <input type="text" name="category_value" class="form-control" placeholder="Dodaj nową kategorię" required>
+                        <button type="submit" class="btn btn-primary">Dodaj</button>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+            
