@@ -9,9 +9,9 @@ $twig = new \Twig\Environment($loader);
 // Renderujemy widok logowania
 echo $twig->render('login.twig');
 
-
+//nie zabezpieczam dla wygody
 if(isset($_POST['login'])){
-    $username = $_POST['username'];
+    $username = htmlspecialchars($_POST['username']);
     $password = $_POST['password'];
 
     global $conn;

@@ -6,11 +6,11 @@ require '../vendor/autoload.php';
 $loader = new \Twig\Loader\FilesystemLoader('C:/xampp/htdocs/ToDoSoftware/views');
 $twig = new \Twig\Environment($loader);
 
-// Renderujemy widok logowania
+// Renderujemy widok rejestracji
 echo $twig->render('register.twig');
 
 
-
+//nie zabezpieczam dla wygody
 //rejestracja 
 if(isset($_POST['register'])){
     $imie = $_POST['imie'];

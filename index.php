@@ -5,8 +5,9 @@ include 'connect/db_connect.php';
 require 'vendor/autoload.php';
 require 'modules/function.php';
 require 'modules/category.php';
+$categoryId = null;
+$_SESSION['category'] = null;
 if(isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == true) {
-    error_reporting(0);
     if(isset($_GET['categoryId'])) {
         $_SESSION['category' ] = $_GET['categoryId'];
     }
